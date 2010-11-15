@@ -1,0 +1,39 @@
+Package: GlideinwmsReleaseManager 
+
+REASON FOR THE PACKAGE
+======================
+
+Ideally, you can use any build tool or Makefiles to do this. Most common tools
+like paver and scon can be used, but they still require you to write python 
+code to do the task and above all you need to learn their API. Our use case is
+relatively simple to code and hopeully we can add tasks to the release manager
+relatively quickly.
+
+Following tasks have been implemented
+
+- Automate the glideinWMS releases process
+  * Autocreate the required checksum files
+  * Autocreate the tarballs for the factory and frontend
+ 
+TODO
+====
+
+In the infinite amount of spare time, I would like to add following to this
+
+- Automate the generation of project web spaces files using XSLT
+- pylintrc file to check the code quality
+- Put in summport for GetOpts command line options rather than the current
+  positional one.
+- Support running independent tasks through command line options
+- Support task hierarcy so base task is auto built
+- Move to paver or scions build tools for python
+  http://blog.doughellmann.com/2009/01/converting-from-make-to-paver.html
+
+
+CODE DIRECTORY STRUCTURE
+GlideinwmsReleaseManager/bin	# Executables
+                        /lib	# Libs
+                        /doc	# Documentation
+                        /xslt	# XSLT files to use for html content generation
+                        /etc	# Config files
+
