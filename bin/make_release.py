@@ -46,9 +46,12 @@ def parse_opts(argv):
     return options
     
 def required_args_present(options):
-    if ( (options.relVersion == None) or
-         (options.srcDir == None)  or
-         (options.releaseDir == None)):
+    try:
+        if ( (options.relVersion == None) or
+             (options.srcDir == None)  or
+             (options.relDir == None)):
+            return False
+    except AttributeError:
         return False
     return True
 #   check_required_args
@@ -57,10 +60,10 @@ def required_args_present(options):
 #def main(ver, srcDir, relDir):
 def main(argv):
     options = parse_opts(argv)
-    sys.exit(1)
+    #sys.exit(1)
     ver = options.relVersion
     srcDir = options.srcDir
-    relDir = options.releaseDir
+    relDir = options.relDir
     print "___________________________________________________________________"
     print "Creating following glideinWMS release"
     print "Version=%s\nSourceDir=%s\nReleaseDir=%s" % (ver, srcDir, relDir)
