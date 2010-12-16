@@ -327,11 +327,3 @@ def execute_cmd1(cmd, stdin_data=None):
         raise ExeError, "Error running '%s'\ncode %i:%s"%(cmd,errcode,tempErr)
     return tempOut
 """
-
-
-
-
-
-
-
-

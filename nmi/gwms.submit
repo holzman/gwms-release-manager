@@ -1,0 +1,19 @@
+project = glideinWMS
+component = all branches
+description = glideinWMS pylint tests
+
+run_type = build
+inputs = pylint.nmi, config.scp, checkout.scp, export-paths.scp, pylint.scp, results.scp
+
+pre_all = checkout.py
+
+platform_post = results.py
+
+remote_task = export-paths.sh
+
+platforms = x86_suse_10.0
+
+#notify = miguel.alatorre@gmail.com
+
+#cron_min = 00
+#cron_hour = 10

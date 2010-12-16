@@ -1,0 +1,2 @@
+method = scp
+scp_file = /home/malatorre/gwms-all/pylint.py
