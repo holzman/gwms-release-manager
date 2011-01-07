@@ -195,7 +195,8 @@ class TaskVersionFile(TaskRelease):
 
 
     def execute(self):
-        self.checksumRelease(self.releaseChksumFile, [])
+        self.checksumRelease(self.releaseChksumFile,
+                             self.excludes.commonPattern)
         self.checksumRelease(self.frontendChksumFile,
                              self.excludes.frontendPattern)
         self.checksumRelease(self.factoryChksumFile,
@@ -218,11 +219,20 @@ class PackageExcludes:
     
     def __init__(self):
 
+        self.commonPattern = [
+            'install/glideinWMS.ini',
+            'install/manage-glideins',
+            'install/services',
+        ]
+
         # Patterns that need to be excluded from the factory tarball
         self.factoryPattern = [
             'CVS',
             'poolwatcher',
             'frontend',
+            'install/glideinWMS.ini',
+            'install/manage-glideins',
+            'install/services',
             'creation/create_frontend',
             'creation/reconfig_frontend',
             'creation/lib/cvW*',
@@ -235,7 +245,10 @@ class PackageExcludes:
         # For frontend we still need 2 factory libs for frontend tools
         self.frontendPattern = [
             'CVS',
-            'poolwatcher',        
+            'poolwatcher',
+            'install/glideinWMS.ini',
+            'install/manage-glideins',
+            'install/services',
             'factory/check*',        
             'factory/glideFactory*Lib*',        
             'factory/glideFactoryMon*',        
