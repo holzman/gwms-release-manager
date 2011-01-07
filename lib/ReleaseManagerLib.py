@@ -180,14 +180,15 @@ class TaskVersionFile(TaskRelease):
         TaskRelease.__init__(self, 'VersionFile', rel)
         self.releaseChksumFile = os.path.normpath(
                                      os.path.join(self.release.sourceDir,
-                                                  'doc/checksum'))
+                                                  'etc/checksum'))
         self.frontendChksumFile = os.path.normpath(
                                      os.path.join(self.release.sourceDir,
-                                                  'doc/checksum.frontend'))
+                                                  'etc/checksum.frontend'))
         self.factoryChksumFile = os.path.normpath(
                                      os.path.join(self.release.sourceDir,
-                                                  'doc/checksum.factory'))
+                                                  'etc/checksum.factory'))
         self.excludes =  PackageExcludes()
+        self.checksumFilePattern = 'etc/checksum*'
         self.chksumBin = os.path.normpath(os.path.join(sys.path[0],
                                                        'chksum.sh'))
         
@@ -202,9 +203,9 @@ class TaskVersionFile(TaskRelease):
         self.status = 'COMPLETE'
 
     def checksumRelease(self, chksumFile, exclude):
-        excludePattern = ''
+        excludePattern = self.checksumFilePattern
         if len(exclude) > 0:
-            excludePattern = "\"" +  string.join(exclude, " ") + "\""
+            excludePattern = "\"" + "%s "%excludePattern + string.join(exclude, " ") + "\""
         cmd = "cd %s; %s %s %s %s" % (self.release.sourceDir, self.chksumBin,
                                       self.release.version, chksumFile,
                                       excludePattern)
@@ -225,6 +226,7 @@ class PackageExcludes:
             'creation/create_frontend',
             'creation/reconfig_frontend',
             'creation/lib/cvW*',
+            'creation/web_base/frontend*html',
             'creation/web_base/frontend*html',
         ]
         #    'glideinWMS/tools',
