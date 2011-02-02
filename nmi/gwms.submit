@@ -3,17 +3,20 @@ component = all branches
 description = glideinWMS pylint tests
 
 run_type = build
-inputs = pylint.nmi, config.scp, checkout.scp, export-paths.scp, pylint.scp, results.scp
-
-pre_all = checkout.py
+inputs = pylint.nmi, config.scp, get-symbolic-names.scp, checkout.scp, pylint-gwms.scp, results.scp
 
 platform_post = results.py
 
-remote_task = export-paths.sh
+pre_all = checkout.sh
 
-platforms = x86_suse_10.0
+remote_pre = /bin/ls
+remote_pre_args = -lrt
 
-#notify = miguel.alatorre@gmail.com
+remote_task = pylint-gwms.sh
 
-#cron_min = 00
-#cron_hour = 10
+platforms = x86_64_rhap_5.3
+
+notify = malatorr@fnal.gov
+
+cron_minute = 00
+cron_hour = 09

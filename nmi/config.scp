@@ -1,2 +1,2 @@
 method = scp
-scp_file = /home/malatorre/gwms-all/branches.cfg
+scp_file = /home/malatorre/gwms/config.txt

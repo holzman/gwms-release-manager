@@ -1,2 +1,2 @@
 method = scp
-scp_file = /home/malatorre/gwms-all/checkout.py
+scp_file = /home/malatorre/gwms/checkout.sh

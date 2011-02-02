@@ -1,2 +1,2 @@
 method = scp
-scp_file = /home/malatorre/gwms-all/results.py
+scp_file = /home/malatorre/gwms/results.py
