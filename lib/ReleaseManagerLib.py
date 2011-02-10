@@ -204,7 +204,7 @@ class TaskVersionFile(TaskRelease):
         self.status = 'COMPLETE'
 
     def checksumRelease(self, chksumFile, exclude):
-        excludePattern = self.checksumFilePattern
+        excludePattern = self.checksumFilePattern + " CVS config_examples " 
         if len(exclude) > 0:
             excludePattern = "\"" + "%s "%excludePattern + string.join(exclude, " ") + "\""
         cmd = "cd %s; %s %s %s %s" % (self.release.sourceDir, self.chksumBin,
@@ -227,7 +227,6 @@ class PackageExcludes:
 
         # Patterns that need to be excluded from the factory tarball
         self.factoryPattern = [
-            'CVS',
             'poolwatcher',
             'frontend',
             'install/glideinWMS.ini',
@@ -244,7 +243,6 @@ class PackageExcludes:
         # Patterns that need to be excluded from the frontend tarball
         # For frontend we still need 2 factory libs for frontend tools
         self.frontendPattern = [
-            'CVS',
             'poolwatcher',
             'install/glideinWMS.ini',
             'install/manage-glideins',
