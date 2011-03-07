@@ -137,7 +137,7 @@ class TaskTar(TaskRelease):
         TaskRelease.__init__(self, 'GlideinWMSTar', rel)
         self.excludes = PackageExcludes()
         self.releaseFilename = 'glideinWMS_%s.tgz' % self.release.version
-        self.excludePattern = []
+        self.excludePattern = self.excludes.commonPattern
     #   __init__
 
     def execute(self):
@@ -157,7 +157,7 @@ class TaskFrontendTar(TaskTar):
     def __init__(self, rel):
         TaskTar.__init__(self, rel)
         self.name = 'FrontendTar'
-        self.releaseFilename = 'glideinWMS_frontend_%s.tgz' % self.release.version
+        self.releaseFilename = 'glideinWMS_%s_frontend.tgz' % self.release.version
         self.excludePattern = self.excludes.frontendPattern
 
     #   __init__
@@ -168,7 +168,7 @@ class TaskFactoryTar(TaskTar):
     def __init__(self, rel):
         TaskTar.__init__(self, rel)
         self.name = 'FactoryTar'
-        self.releaseFilename = 'glideinWMS_factory_%s.tgz' % self.release.version
+        self.releaseFilename = 'glideinWMS_%s_factory.tgz' % self.release.version
         self.excludePattern = self.excludes.factoryPattern
 
     #   __init__
@@ -220,18 +220,20 @@ class PackageExcludes:
     def __init__(self):
 
         self.commonPattern = [
-            'install/glideinWMS.ini',
-            'install/manage-glideins',
-            'install/services',
+            'CVS',
+            #'install/glideinWMS.ini',
+            #'install/manage-glideins',
+            #'install/services',
         ]
 
         # Patterns that need to be excluded from the factory tarball
         self.factoryPattern = [
+            'CVS',
             'poolwatcher',
             'frontend',
-            'install/glideinWMS.ini',
-            'install/manage-glideins',
-            'install/services',
+            #'install/glideinWMS.ini',
+            #'install/manage-glideins',
+            #'install/services',
             'creation/create_frontend',
             'creation/reconfig_frontend',
             'creation/lib/cvW*',
@@ -243,10 +245,12 @@ class PackageExcludes:
         # Patterns that need to be excluded from the frontend tarball
         # For frontend we still need 2 factory libs for frontend tools
         self.frontendPattern = [
+            'CVS',
             'poolwatcher',
-            'install/glideinWMS.ini',
-            'install/manage-glideins',
-            'install/services',
+            'poolwatcher',
+            #'install/glideinWMS.ini',
+            #'install/manage-glideins',
+            #'install/services',
             'factory/check*',        
             'factory/glideFactory*Lib*',        
             'factory/glideFactoryMon*',        
