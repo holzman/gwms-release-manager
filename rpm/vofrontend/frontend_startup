@@ -5,20 +5,35 @@
 
 # Emulate function library.
 success() {
- echo -en "\033[60G[[32mOK[0m]"
+ echo -en "\033[80G[[32mOK[0m]"
  return 0
 }
 
 failure() {
- echo -en "\033[60G[[31mFAILED[0m]"
+ echo -en "\033[80G[[31mFAILED[0m]"
  return 1
 }
 
 frontend_dir='/usr/share/gwms-frontend/frontend-temp'
 glideinWMS_dir=$frontend_dir
+frontend_config=/etc/gwms-frontend/frontend.xml
+frontend_name=''
+if [ -s ${frontend_config} ]
+then
+    frontend_name=`grep "^<frontend" $frontend_config  | sed 's/ /\n/g' | grep ^frontend_name | awk 'BEGIN { FS = "\""} ; { print $2 }'`
+fi
 
-#frontend_name=`awk '/^FrontendName /{print $2}' $frontend_dir/frontend.descript`
-frontend_name='FRONTEND_NAME_CHANGEME'
+if [ -z ${frontend_name} ] && [ -d ${frontend_dir} ]  
+then
+    frontend_name=`awk '/^FrontendName /{print $2}' $frontend_dir/frontend.descript`
+fi
+
+if [ -z ${frontend_name} ]
+then
+    echo 'Cannot determine frontend name!'
+    failure
+fi
+
 id_str="$frontend_name"
 
 start() {

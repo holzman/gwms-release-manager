@@ -1,6 +1,6 @@
 Name:           GlideinWMSFrontend
 Version:        2.5.1
-Release:        9
+Release:        10
 Summary:        The VOFrontend for glideinWMS submission host
 
 Group:          System Environment/Daemons
@@ -25,9 +25,9 @@ Source0:        GlideinWMSFrontend-2.5.1.tar.gz
 Source1:        frontend_startup
 Source2:        frontend.xml
 Source3:        gwms-frontend.conf.httpd
-#Source4:        cvWParamDict.py
 Source4:        00_frontend.config
 Source5:        01_collectors.config
+Source6:	02_frontend-local.config
 patch0:         reconfig_frontend.patch
 patch1:         cvWParamDict.py.patch
 patch2: 	cvWParams.py.patch
@@ -164,8 +164,7 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/gwms-frontend/frontend-temp/CVS
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/condor/config.d
 install -m 0644 %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/condor/config.d/00_frontend.config
 install -m 0644 %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/condor/config.d/01_collectors.config
-
-
+install -m 0644 %{SOURCE6} $RPM_BUILD_ROOT%{_sysconfdir}/condor/config.d/02_frontend-local.config
 
 # Install tools
 install -d $RPM_BUILD_ROOT%{_bindir}
@@ -186,7 +185,6 @@ frontend_name=`echo $fqdn_hostname | sed 's/\./-/g'`_OSG_gWMSFrontend
 
 
 sed -i "s/FRONTEND_NAME_CHANGEME/$frontend_name/g" %{_sysconfdir}/gwms-frontend/frontend.xml
-sed -i "s/FRONTEND_NAME_CHANGEME/$frontend_name/g" %{_initrddir}/frontend_startup
 
 #mv %{_datadir}/gwms-frontend/www/stage/ %{_datadir}/gwms-frontend/www/stage/$frontend_name
 
@@ -231,10 +229,15 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/gwms-frontend.conf
 %config(noreplace) %{_sysconfdir}/condor/config.d/00_frontend.config
 %config(noreplace) %{_sysconfdir}/condor/config.d/01_collectors.config
+%config(noreplace) %{_sysconfdir}/condor/config.d/02_frontend-local.config
 %config(noreplace) %{_sysconfdir}/gwms-frontend/frontend.xml
 
 
 %changelog
+* Tue Apr 05 2011 Burt Holzman 2.5.1-10
+- Update frontend_startup script to better determine frontend name
+- Move user-editable configuration items into 02_frontend-local.config
+
 * Tue Mar 22 2011 Derek Weitzel 2.5.1-8
 - Change condor config file name to 00_frontend.config
 - Separated definition of collectors into 01_collectors.config
