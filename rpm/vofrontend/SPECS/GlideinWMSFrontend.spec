@@ -193,6 +193,10 @@ ln -s %{_sysconfdir}/gwms-frontend/frontend.xml %{_datadir}/gwms-frontend/fronte
 ln -s %{_datadir}/gwms-frontend/www/monitor/ %{_datadir}/gwms-frontend/frontend-temp/monitor
 ln -s %{_datadir}/gwms-frontend/www/monitor/group_main %{_datadir}/gwms-frontend/frontend-temp/group_main/monitor
 
+%pre
+# Add the "frontend" user 
+/usr/sbin/useradd -c "VO Frontend User" \
+	-s /sbin/nologin -r frontend 2> /dev/null || :
 
 %preun
 # $1 = 0 - Action is uninstall
@@ -219,11 +223,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %files
-%defattr(-,nobody,nobody,-)
+%defattr(-,frontend,frontend,-)
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
-%attr(-, nobody, nobody) %{_datadir}/gwms-frontend
-%attr(-, nobody, nobody) %{_localstatedir}/log/gwms-frontend
+%attr(-, frontend, frontend) %{_datadir}/gwms-frontend
+%attr(-, frontend, frontend) %{_localstatedir}/log/gwms-frontend
 %{python_sitelib}
 %{_initrddir}/frontend_startup
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/gwms-frontend.conf

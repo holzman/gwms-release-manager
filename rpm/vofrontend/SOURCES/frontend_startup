@@ -38,7 +38,7 @@ id_str="$frontend_name"
 
 start() {
         echo -n "Starting glideinWMS frontend $id_str: "
-        su -s /bin/bash nobody -c "nice -2 \"glideinFrontend\" \"$frontend_dir\"" 2>/dev/null 1>&2 </dev/null &
+        su -s /bin/bash frontend -c "nice -2 \"glideinFrontend\" \"$frontend_dir\"" 2>/dev/null 1>&2 </dev/null &
         sleep 5
         "checkFrontend" "$frontend_dir"  2>/dev/null 1>&2 </dev/null && success || failure
         RETVAL=$?
