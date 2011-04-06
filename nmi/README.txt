@@ -1,22 +1,41 @@
-# branches.cfg
-Configuration file to list branches to checkout as well as directories to run pylint against.
+* Specify default branches in config.txt
+* Specify notification recipient in gwms.submit
+* Specify results email recipients in results.py
+* Specify cron hour and minute for recurring runs in gwms.submit
+* Ensure checkout.sh, pylint-gwms.sh, and results.py are executable
 
-# pylint.nmi
-Points to pylint NMI build.
+Process:
+  First we need to install pylint onto the remote NMI machine.
+  The pylint installation files are found in the pylint directory;
+  Just run <nmi_submit pylint.submit>. Make a note of the run id.
+  The disk cleaner will remove our installed files unless we pin
+  the run. To do this, run <nmi_pin -days='X' runid>, where X is
+  the number of days to keep the run and runid is the noted run id.
+  Currently, it is pinned until February, 2012.
 
-# checkout.py
-Checks out each branch into its own directory.
+  Before running gwms.submit, we need to tell our job where
+  to find the previously installed pylint files. We do so in the
+  pylint.nmi file by setting <input_runids> to the noted run id.
 
-# export-paths.sh
-Exports environment variables (ie, PYTHONPATH), then calls pylint.py
+  Now we can submit our gwms job:
 
-# pylint.py
-Runs pylint against each branch, saves the results of each branch in a text file and tarballs all results.
+  First, checkout.sh runs. We checkout the HEAD branch first, which
+  is needed for get-other-branches.py.
 
-# results.py
-Extracts results and sends email with brief error description along and error files attached.
-Be sure to uncomment and set 'to' and 'cc' if needed.
+  Next, get-other-branches.py runs. Here, for each python file in
+  factory, frontend, tools, lib, tools/lib, and creation/lib we do
+  the following:
+    1. Run cvs log to check if any changes have been made to the file
+       in the last two weeks.
+    2. If a change was made, we extract the file name and revision number.
+    3. For each file with changes, we run cvs status to get the list of
+       tagnames for this file. We then check this list for the tagname
+       that corresponds to the revision number.
+    4. Last, we write the tagnames to config.txt
 
-# gwms-all.submit
-Be sure to uncomment and set 'notify' email to be notified on job completion.
-Be sure to uncomment and set cron parameters for recurring job.
+  Now that config.txt includes a list of all the branches that we are
+  interested in, we run pylint-gwms.sh, which runs pylint against the
+  necessary modules of each branch and tarballs the results.
+
+  Finally, results.py runs which extracts the results and sends out
+  the appropriate email.

@@ -1,0 +1,2 @@
+method = scp
+scp_file = /home/malatorre/gwms/pylint/pylint-0.21.2.tar.gz

@@ -21,6 +21,8 @@ do
   export errors="$line-err.txt"
   export results="$results $errors"
 
+  modules_checked=0
+
   for dir in lib creation/lib factory frontend tools tools/lib
   do
     exitstatus=0
@@ -28,13 +30,15 @@ do
 
     for file in *.py
     do
+      ((modules_checked++))
       echo "##" $dir >> $currdir/$errors
       pylint --errors-only $file >> $currdir/$errors
-    done 
+    done
     cd $currdir
   done
   unset GHOME
   unset PYTHONPATH
+  echo "Modules checked="$modules_checked >> $currdir/$errors
 done < config-tmp.txt
 
 tar czvf results.tar.gz $results
