@@ -1,0 +1,2 @@
+method = scp
+scp_file = /home/malatorre/gwms/get-other-branches.py
