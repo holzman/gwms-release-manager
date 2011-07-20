@@ -1,6 +1,6 @@
 Name:           GlideinWMSFrontend
-Version:        2.5.1
-Release:        10
+Version:        2.5.2
+Release:        1
 Summary:        The VOFrontend for glideinWMS submission host
 
 Group:          System Environment/Daemons
@@ -238,6 +238,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Apr 05 2011 Burt Holzman 2.5.2-1
+- Update version number to 2.5.2
+
 * Tue Apr 05 2011 Burt Holzman 2.5.1-10
 - Update frontend_startup script to better determine frontend name
 - Move user-editable configuration items into 02_frontend-local.config
