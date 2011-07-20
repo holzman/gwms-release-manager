@@ -58,7 +58,7 @@ for scheduling and job control.
 
 
 %prep
-%setup -q
+%setup -q -n glideinWMS
 # Apply the patches
 %patch -P 0
 %patch -P 1 -R -p0
