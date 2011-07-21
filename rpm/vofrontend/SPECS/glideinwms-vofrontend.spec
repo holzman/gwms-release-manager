@@ -1,6 +1,6 @@
 Name:           glideinwms-vofrontend
 Version:        2.5.2
-Release:        11
+Release:        1
 Summary:        The VOFrontend for glideinWMS submission host
 
 Group:          System Environment/Daemons
