@@ -6,4 +6,4 @@
 cp -f SOURCES/* /usr/src/redhat/SOURCES/
 cp -f SPECS/* /usr/src/redhat/SPECS/
 
-rpmbuild -bs /usr/src/redhat/SPECS/GlideinWMSFrontend.spec
+rpmbuild -bs /usr/src/redhat/SPECS/glideinwms-vofrontend.spec
