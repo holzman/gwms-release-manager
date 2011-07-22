@@ -1,80 +1,34 @@
 #!/usr/bin/env python
-import os, re, time
+import os, sre, time
 from datetime import date, timedelta
+import subprocess
+from sets import Set
 
-root_dir = os.getcwd()
-head_dir = root_dir + '/glideinWMS'
-log_file = head_dir + '/log.txt'
-status_file = head_dir + '/status.txt'
-os.chdir(head_dir)
+logopts  = ['git', 'log', '--all', '--oneline', '--since', '"1 week ago"']
+logopts += ['--pretty=format:%d']
 
-d = date.today() + timedelta(days=1)
-tomorrow = '%s-%s-%s' % (d.year, d.month, d.day)
-d = date.today() - timedelta(days=14)
-two_weeks_ago = '%s-%s-%s' % (d.year, d.month, d.day)
+p = subprocess.Popen(logopts, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+(stdout, stderr) = p.communicate()
+logOutput = stdout.split('\n')
 
-directories = ['factory', 'frontend', 'tools', 'lib', 'tools/lib', 'creation/lib']
+pattern = sre.compile('.*\((.*)\)')
 
-for directory in directories:
-    os.chdir(directory)
-    for file in os.listdir(os.getcwd()):
-        if file.endswith('.py'):
-            cmd = 'cvs log -N -S -d "%s<%s" %s >> %s' % (two_weeks_ago, tomorrow, file, log_file)
-            os.system(cmd)
-    os.chdir(head_dir)
+branchlist = Set()
+for line in logOutput:  # list that looks like " (branch1, branch2, branch3) "
+    m = sre.match(pattern, line)
+    if m:
+        branches = m.group(1).split(',')
+        for x in branches: branchlist.add(x.strip())
 
-# grab file names and revision numbers
-f = open('log.txt', 'r')
-a = {}
+# get list of remote branches to exclude
+p = subprocess.Popen(['git', 'branch', '-r'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-# each file could have many revisions
-n = 0
-for line in f:
-    if line.startswith('RCS file'):
-        filename = line.split('\n')[0].split(',v')[0].split('glideinWMS/')[-1] + "_flag"
+(stdout, stderr) = p.communicate()
+excludebranches = Set(stdout.split())
+excludebranches.add('refs/stash')
 
-    if line.startswith('revision'):
-        rev_array = line.split('\n')[0].split(' ')[1].split('.')
-        if len(rev_array) > 2:
-            rev_array.pop()
-        branch = ''
-        for i in range(len(rev_array)):
-            if i == 0:
-                branch += '%s' % rev_array[i]
-            else:
-                branch += '.%s' % rev_array[i]
-        filename += "%s" % n
-        a[filename] = branch
-        n += 1
-
-f.close()
-
-# find tag names
-tags = []
-
-if len(a) > 0:
-    for filename, branch in a.iteritems():
-        # strip filename of flag and add closed parenthesis to branch
-        filename = filename.split('_flag')[0]
-        branch = branch + ')\n'
-        cmd = 'cvs status -v %s > status.txt' % filename
-        os.system(cmd)
-
-        f = open('status.txt', 'r')
-        for line in f:
-            if line.endswith(branch):
-                tag = line.split('\t')[1]
-                tags.append(tag)
-        f.close()
-
-os.chdir(root_dir)
+branchlist.difference_update(excludebranches)
 
 config_file = open('config.txt', 'a')
-
-tagnames = set(tags)
-for tagname in tagnames:
-    if tagname != '':
-        line = tagname + '\n'
-        config_file.write(line)
-
+config_file.writelines('\n'.join(branchlist))
 config_file.close()
