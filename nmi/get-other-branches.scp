@@ -1,2 +1,2 @@
 method = scp
-scp_file = /home/malatorre/gwms/get-other-branches.py
+scp_file = /home/burt/gwms/get-other-branches.py

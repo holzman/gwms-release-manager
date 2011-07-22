@@ -1,2 +1,2 @@
 method = scp
-scp_file = /home/malatorre/gwms/pylint-gwms.sh
+scp_file = /home/burt/gwms/pylint-gwms.sh

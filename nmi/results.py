@@ -139,7 +139,7 @@ html += """\
 
 # compose and send email
 frm = 'pylint-results@noreply.com'
-to = ['glideinwms@fnal.gov', 'malatorr@fnal.gov']
+to = ['glideinwms@fnal.gov', 'burt@fnal.gov']
 
 body = MIMEText(html, 'html')
 msg.attach(body)

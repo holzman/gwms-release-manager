@@ -17,7 +17,7 @@ remote_task_timeout = 120
 
 platforms = x86_64_rhap_5.3
 
-#notify = malatorr@fnal.gov
+#notify = burt@fnal.gov
 
 #cron_minute = 00
 #cron_hour = 09

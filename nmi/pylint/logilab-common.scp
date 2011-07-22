@@ -1,2 +1,2 @@
 method = scp
-scp_file = /home/malatorre/gwms/pylint/logilab-common-0.51.1.tar.gz
+scp_file = /home/burt/gwms/pylint/logilab-common-0.51.1.tar.gz

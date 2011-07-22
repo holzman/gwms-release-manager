@@ -1,2 +1,2 @@
 method = scp
-scp_file = /home/malatorre/gwms/config.txt
+scp_file = /home/burt/gwms/config.txt
