@@ -11,7 +11,8 @@ BuildArch:      noarch
 #BuildRequires:  
 #Requires:       
 #BuildArchitectures: noarch 
-Obsoletes:	GlideinWMSFrontend
+Provides:	GlideinWMSFrontend = %{version}-%{release}
+Obsoletes:	GlideinWMSFrontend < 2.5.1-11
 
 
 #Source0:        http://www.uscms.org/SoftwareComputing/Grid/WMS/glideinWMS/glideinWMS_v2_5_2_frontend.tgz
