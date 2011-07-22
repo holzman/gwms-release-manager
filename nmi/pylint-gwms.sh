@@ -6,10 +6,11 @@ grep -v '^[[:space:]]*#' config.txt > config-tmp.txt
 
 export currdir=$PWD
 export results=""
+export GHOME=`pwd`/glideinWMS
 
 while read line
 do
-  export GHOME=`pwd`/$line/glideinWMS
+  git co ${line}
   export PYTHONPATH=${PYHOME}/lib/python2.4/site-packages:${PYTHONPATH}
   export PYTHONPATH=${PYTHONPATH}:${GHOME}/lib
   export PYTHONPATH=${PYTHONPATH}:${GHOME}/creation/lib
