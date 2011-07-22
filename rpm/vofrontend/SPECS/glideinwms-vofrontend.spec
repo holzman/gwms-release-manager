@@ -1,6 +1,6 @@
 Name:           glideinwms-vofrontend
 Version:        2.5.1
-Release:        11
+Release:        12
 Summary:        The VOFrontend for glideinWMS submission host
 
 Group:          System Environment/Daemons
@@ -11,7 +11,8 @@ BuildArch:      noarch
 #BuildRequires:  
 #Requires:       
 #BuildArchitectures: noarch 
-Obsoletes:	GlideinWMSFrontend
+Provides:	GlideinWMSFrontend = %{version}-%{release}
+Obsoletes:	GlideinWMSFrontend < 2.5.1-11
 
 
 #Source0:        http://www.uscms.org/SoftwareComputing/Grid/WMS/glideinWMS/glideinWMS_v2_5_1_frontend.tgz
