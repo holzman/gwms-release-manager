@@ -4,7 +4,7 @@ from datetime import date, timedelta
 import subprocess
 from sets import Set
 
-logopts  = ['/usr/bin/git', 'log', '--all', '--oneline', '--since', '"1 week ago"']
+logopts  = ['/usr/bin/git', 'log', '--all', '--oneline', '--since', '"2 weeks ago"']
 logopts += ['--pretty=format:%d']
 
 p = subprocess.Popen(logopts, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
