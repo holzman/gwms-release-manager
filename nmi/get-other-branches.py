@@ -4,7 +4,7 @@ from datetime import date, timedelta
 import subprocess
 from sets import Set
 
-logopts  = ['git', 'log', '--all', '--oneline', '--since', '"1 week ago"']
+logopts  = ['/usr/bin/git', 'log', '--all', '--oneline', '--since', '"1 week ago"']
 logopts += ['--pretty=format:%d']
 
 p = subprocess.Popen(logopts, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -20,15 +20,16 @@ for line in logOutput:  # list that looks like " (branch1, branch2, branch3) "
         branches = m.group(1).split(',')
         for x in branches: branchlist.add(x.strip())
 
-# get list of remote branches to exclude
-p = subprocess.Popen(['git', 'branch', '-r'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+# get list of branches to include
+p = subprocess.Popen(['/usr/bin/git', 'branch'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 (stdout, stderr) = p.communicate()
-excludebranches = Set(stdout.split())
-excludebranches.add('refs/stash')
+includebranches = Set(stdout.split())
+#includebranches.add('refs/stash')
 
-branchlist.difference_update(excludebranches)
+branchlist.intersection_update(includebranches)
 
-config_file = open('config.txt', 'a')
+config_file = open('../config.txt', 'a')
+# TODO: read in lines and guarantee uniqueness
 config_file.writelines('\n'.join(branchlist))
 config_file.close()

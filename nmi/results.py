@@ -139,7 +139,7 @@ html += """\
 
 # compose and send email
 frm = 'pylint-results@noreply.com'
-to = ['glideinwms@fnal.gov', 'burt@fnal.gov']
+to = ['glideinwms@fnal.gov']
 
 body = MIMEText(html, 'html')
 msg.attach(body)
@@ -147,7 +147,7 @@ msg.attach(body)
 for attachment in attachments:
     msg.attach(attachment)
 
-msg['Subject'] = 'glideinWMS pylint errors %s' % datetime.datetime.now().strftime('%m-%d-%Y')
+msg['Subject'] = 'GIT: glideinWMS pylint errors %s' % datetime.datetime.now().strftime('%m-%d-%Y')
 msg['From'] = frm
 msg['To'] = COMMASPACE.join(to)
 

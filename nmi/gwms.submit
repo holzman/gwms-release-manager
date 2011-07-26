@@ -3,7 +3,7 @@ component = all branches
 description = glideinWMS pylint tests
 
 run_type = build
-inputs = pylint.nmi, config.scp, get-other-branches.scp, filter-other-branches.scp, checkout.scp, pylint-gwms.scp, results.scp
+inputs = pylint.nmi, git.nmi, config.scp, get-other-branches.scp, checkout.scp, pylint-gwms.scp, results.scp
 
 platform_post = results.py
 
@@ -16,8 +16,7 @@ remote_task = pylint-gwms.sh
 remote_task_timeout = 120
 
 platforms = x86_64_rhap_5.3
-
 #notify = burt@fnal.gov
 
-#cron_minute = 00
-#cron_hour = 09
+cron_minute = 00
+cron_hour = 08
