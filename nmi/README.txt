@@ -25,13 +25,9 @@ Process:
   Next, get-other-branches.py runs. Here, for each python file in
   factory, frontend, tools, lib, tools/lib, and creation/lib we do
   the following:
-    1. Run cvs log to check if any changes have been made to the file
+    1. Run git log to check if any changes have been made to the file
        in the last two weeks.
-    2. If a change was made, we extract the file name and revision number.
-    3. For each file with changes, we run cvs status to get the list of
-       tagnames for this file. We then check this list for the tagname
-       that corresponds to the revision number.
-    4. Last, we write the tagnames to config.txt
+    2. If a change was made, we add it to the list of branches to check out in config.txt.
 
   Now that config.txt includes a list of all the branches that we are
   interested in, we run pylint-gwms.sh, which runs pylint against the
