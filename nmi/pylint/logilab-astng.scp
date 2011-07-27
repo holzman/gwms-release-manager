@@ -1,2 +1,2 @@
 method = scp
-scp_file = /home/burt/gwms/pylint/logilab-astng-0.20.2.tar.gz
+scp_file = /home/burt/gwms-release-manager/branches/pylint-git/nmi/pylint/logilab-astng-0.20.2.tar.gz

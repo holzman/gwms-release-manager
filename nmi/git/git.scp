@@ -1,2 +1,2 @@
 method = scp
-scp_file = /home/burt/gwms/git/git-1.7.6.tar.bz2
+scp_file = /home/burt/gwms-release-manager/branches/pylint-git/nmi/git/git-1.7.6.tar.bz2

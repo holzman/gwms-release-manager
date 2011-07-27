@@ -1,2 +1,2 @@
 method = scp
-scp_file = /home/burt/gwms/pylint/pylint_installer.sh
+scp_file = /home/burt/gwms-release-manager/branches/pylint-git/nmi/pylint/pylint_installer.sh
