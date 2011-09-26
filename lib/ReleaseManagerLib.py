@@ -136,7 +136,7 @@ class TaskTar(TaskRelease):
     def __init__(self, rel):
         TaskRelease.__init__(self, 'GlideinWMSTar', rel)
         self.excludes = PackageExcludes()
-        self.releaseFilename = 'glideinWMS_%s.tgz' % self.release.version
+        self.releaseFilename = 'glideinwms_%s.tgz' % self.release.version
         self.excludePattern = self.excludes.commonPattern
     #   __init__
 
@@ -144,7 +144,7 @@ class TaskTar(TaskRelease):
         exclude = ""
         if len(self.excludePattern) > 0:
             exclude = "--exclude='" +  string.join(self.excludePattern, "' --exclude='") + "'"
-        cmd = 'cd %s/..; /bin/tar %s -czf %s/%s glideinWMS' % \
+        cmd = 'cd %s/..; /bin/tar %s -czf %s/%s glideinwms' % \
               (self.release.sourceDir, exclude, self.release.releaseDir, self.releaseFilename)
         print "%s" % cmd
         execute_cmd(cmd)
@@ -157,7 +157,7 @@ class TaskFrontendTar(TaskTar):
     def __init__(self, rel):
         TaskTar.__init__(self, rel)
         self.name = 'FrontendTar'
-        self.releaseFilename = 'glideinWMS_%s_frontend.tgz' % self.release.version
+        self.releaseFilename = 'glideinwms_%s_frontend.tgz' % self.release.version
         self.excludePattern = self.excludes.frontendPattern
 
     #   __init__
@@ -168,7 +168,7 @@ class TaskFactoryTar(TaskTar):
     def __init__(self, rel):
         TaskTar.__init__(self, rel)
         self.name = 'FactoryTar'
-        self.releaseFilename = 'glideinWMS_%s_factory.tgz' % self.release.version
+        self.releaseFilename = 'glideinwms_%s_factory.tgz' % self.release.version
         self.excludePattern = self.excludes.factoryPattern
 
     #   __init__
@@ -221,6 +221,8 @@ class PackageExcludes:
 
         self.commonPattern = [
             'CVS',
+            '.git',
+            '.gitattributes',
             #'install/glideinWMS.ini',
             #'install/manage-glideins',
             #'install/services',
@@ -229,6 +231,8 @@ class PackageExcludes:
         # Patterns that need to be excluded from the factory tarball
         self.factoryPattern = [
             'CVS',
+            '.git',
+            '.gitattributes',
             'poolwatcher',
             'frontend',
             #'install/glideinWMS.ini',
@@ -246,7 +250,8 @@ class PackageExcludes:
         # For frontend we still need 2 factory libs for frontend tools
         self.frontendPattern = [
             'CVS',
-            'poolwatcher',
+            '.git',
+            '.gitattributes',
             'poolwatcher',
             #'install/glideinWMS.ini',
             #'install/manage-glideins',

@@ -10,7 +10,7 @@ import ReleaseManagerLib
 
 def usage():
     print "%s <version> <SourceDir> <ReleaseDir>" % os.path.basename(sys.argv[0])
-    print "Example: %s v2.5 /tmp/glideinWMS /tmp/release_dir" % os.path.basename(sys.argv[0])
+    print "Example: %s v2.5.3 /tmp/glideinwms /tmp/release_dir" % os.path.basename(sys.argv[0])
 
 def parse_opts(argv):
     parser = optparse.OptionParser(usage='%prog [options]',
@@ -20,12 +20,12 @@ def parse_opts(argv):
                       dest='relVersion',
                       action='store',
                       metavar='<release version>',
-                      help='glideinWMS version to release')
+                      help='glideinwms version to release')
     parser.add_option('--source-dir',
                       dest='srcDir',
                       action='store',
                       metavar='<source directory>',
-                      help='directory containing the glideinWMS source code')
+                      help='directory containing the glideinwms source code')
     parser.add_option('--release-dir',
                       dest='relDir',
                       action='store',
@@ -65,7 +65,7 @@ def main(argv):
     srcDir = options.srcDir
     relDir = options.relDir
     print "___________________________________________________________________"
-    print "Creating following glideinWMS release"
+    print "Creating following glideinwms release"
     print "Version=%s\nSourceDir=%s\nReleaseDir=%s" % (ver, srcDir, relDir)
     print "___________________________________________________________________"
     print 
