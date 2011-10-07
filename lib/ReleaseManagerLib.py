@@ -136,7 +136,7 @@ class TaskTar(TaskRelease):
     def __init__(self, rel):
         TaskRelease.__init__(self, 'GlideinWMSTar', rel)
         self.excludes = PackageExcludes()
-        self.releaseFilename = 'glideinwms_%s.tgz' % self.release.version
+        self.releaseFilename = 'glideinWMS_%s.tgz' % self.release.version
         self.excludePattern = self.excludes.commonPattern
     #   __init__
 
@@ -144,8 +144,12 @@ class TaskTar(TaskRelease):
         exclude = ""
         if len(self.excludePattern) > 0:
             exclude = "--exclude='" +  string.join(self.excludePattern, "' --exclude='") + "'"
-        cmd = 'cd %s/..; /bin/tar %s -czf %s/%s glideinwms' % \
-              (self.release.sourceDir, exclude, self.release.releaseDir, self.releaseFilename)
+        #cmd = 'cd %s/..; /bin/tar %s -czf %s/%s glideinwms' % \
+        #      (self.release.sourceDir, exclude, self.release.releaseDir, self.releaseFilename)
+        src_dir = '%s/../src/%s' % (self.release.releaseDir, 
+                                    self.release.version)
+        cmd = 'rm -rf %s; mkdir -p %s; cp -r %s %s/glideinWMS; cd %s; /bin/tar %s -czf %s/%s glideinWMS' % \
+              (src_dir, src_dir, self.release.sourceDir, src_dir, src_dir, exclude, self.release.releaseDir, self.releaseFilename)
         print "%s" % cmd
         execute_cmd(cmd)
         self.status = 'COMPLETE'
@@ -157,7 +161,7 @@ class TaskFrontendTar(TaskTar):
     def __init__(self, rel):
         TaskTar.__init__(self, rel)
         self.name = 'FrontendTar'
-        self.releaseFilename = 'glideinwms_%s_frontend.tgz' % self.release.version
+        self.releaseFilename = 'glideinWMS_%s_frontend.tgz' % self.release.version
         self.excludePattern = self.excludes.frontendPattern
 
     #   __init__
@@ -168,7 +172,7 @@ class TaskFactoryTar(TaskTar):
     def __init__(self, rel):
         TaskTar.__init__(self, rel)
         self.name = 'FactoryTar'
-        self.releaseFilename = 'glideinwms_%s_factory.tgz' % self.release.version
+        self.releaseFilename = 'glideinWMS_%s_factory.tgz' % self.release.version
         self.excludePattern = self.excludes.factoryPattern
 
     #   __init__
