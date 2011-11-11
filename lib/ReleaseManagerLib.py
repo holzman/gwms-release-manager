@@ -2,10 +2,10 @@
 
 import os, sys
 import subprocess, shlex
-#import popen2
+import popen2
 import traceback
 import string
-from pylint import lint
+#from pylint import lint
 
 
 
