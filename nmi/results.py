@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 import os, datetime, smtplib
+import platform
 from email import Encoders
 from email.Utils import COMMASPACE
 from email.MIMEText import MIMEText
@@ -17,6 +18,8 @@ os.system(untar)
 
 top_line = 'Pylint runs submitted at %s on %s' % (datetime.datetime.now().strftime('%H:%M'), datetime.datetime.now().strftime('%m-%d-%Y'))
 
+version_line = 'Python Version: %s' % platform.python_version()
+
 html = """\
 <html>
 <head>
@@ -27,8 +30,10 @@ th, td { border-style: solid; border-width: 1px; text-align:center; padding: 2px
 </head>
 <body>
 %s
+<br />
+%s
 <br /><br />
-""" % top_line
+""" % (top_line, version_line)
 
 html2 = ''
 
@@ -139,15 +144,15 @@ html += """\
 
 # compose and send email
 frm = 'pylint-results@noreply.com'
-to = ['glideinwms@fnal.gov']
-#to = ['burt@fnal.gov']
+to = ['parag@fnal.gov']
+
 body = MIMEText(html, 'html')
 msg.attach(body)
 
 for attachment in attachments:
     msg.attach(attachment)
 
-msg['Subject'] = 'GIT: glideinWMS pylint errors %s' % datetime.datetime.now().strftime('%m-%d-%Y')
+msg['Subject'] = 'glideinWMS pylint errors %s' % datetime.datetime.now().strftime('%m-%d-%Y')
 msg['From'] = frm
 msg['To'] = COMMASPACE.join(to)
 
