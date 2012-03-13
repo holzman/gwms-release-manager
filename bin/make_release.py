@@ -31,7 +31,7 @@ def parse_opts(argv):
                       action='store',
                       metavar='<release directory>',
                       help='directory to store release tarballs and webpages')
-    
+
     if len(argv) < 4:
         print "ERROR: Insufficient arguments specified"
         parser.print_help()
@@ -44,7 +44,7 @@ def parse_opts(argv):
         parser.print_help()
         sys.exit(1)
     return options
-    
+
 def required_args_present(options):
     try:
         if ( (options.relVersion == None) or
@@ -68,7 +68,7 @@ def main(argv):
     print "Creating following glideinwms release"
     print "Version=%s\nSourceDir=%s\nReleaseDir=%s" % (ver, srcDir, relDir)
     print "___________________________________________________________________"
-    print 
+    print
     rel = ReleaseManagerLib.Release(ver, srcDir, relDir)
 
     rel.addTask(ReleaseManagerLib.TaskClean(rel))
@@ -78,9 +78,9 @@ def main(argv):
     rel.addTask(ReleaseManagerLib.TaskTar(rel))
     rel.addTask(ReleaseManagerLib.TaskFrontendTar(rel))
     rel.addTask(ReleaseManagerLib.TaskFactoryTar(rel))
- 
+
     rel.executeTasks()
     rel.printReport()
-     
+
 if __name__ == "__main__":
     main(sys.argv)

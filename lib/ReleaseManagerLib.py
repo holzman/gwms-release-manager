@@ -24,7 +24,7 @@ class Release:
         self.releaseDir = os.path.join(relDir, self.version)
         self.releaseWebDir = os.path.join(self.releaseDir, 'www')
         self.tasks = []
-        
+
     def addTask(self, task):
         self.tasks.append(task)
     #def printReport(self):
@@ -39,7 +39,7 @@ class Release:
             print "************* Executing %s *************" % (self.tasks[i]).name
             task.execute()
             print "************* %s Status %s *************" % ((self.tasks[i]).name, (self.tasks[i]).status)
-        
+
     def printReport(self):
         print 35*"_"
         print "TASK" + 20*" " + "STATUS"
@@ -47,7 +47,7 @@ class Release:
         for i in range(0, len(self.tasks)):
             print "%-23s %s" % ((self.tasks[i]).name, (self.tasks[i]).status)
         print 35*"_"
- 
+
 
 class TaskRelease:
 
@@ -55,12 +55,12 @@ class TaskRelease:
         self.name = name
         self.release = rel
         self.status = 'INCOMPLETE'
-    #   __init__ 
+    #   __init__
 
     def execute(self):
         raise ExeError('Action execute not implemented for task %s' % self.name)
     #   execute
- 
+
 
 class TaskClean(TaskRelease):
 
@@ -92,7 +92,7 @@ class TaskPylint(TaskRelease):
 
     def __init__(self, rel):
         TaskRelease.__init__(self, 'Pylint', rel)
-        self.rcFile = os.path.join(sys.path[0], '../etc/pylint.rc') 
+        self.rcFile = os.path.join(sys.path[0], '../etc/pylint.rc')
         self.fileList = []
         self.pylintArgs = ['-e', '--rcfile=%s'%self.rcFile]
     #   __init__
@@ -113,17 +113,17 @@ class TaskPylint(TaskRelease):
                 if os.path.isdir(fullname) and not os.path.islink(fullname):
                     stack.append(fullname)
 
-    def pylint(self):        
+    def pylint(self):
         lint.Run(self.pylintArgs + self.fileList)
 
-    def pylint1(self):        
+    def pylint1(self):
         #print self.fileList
         for file in self.fileList:
             print "Running pylint on %s" % file
             print self.pylintArgs + [file]
             lint.Run(self.pylintArgs + [file])
-    
-    
+
+
     def execute(self):
         self.index()
         self.pylint()
@@ -138,6 +138,7 @@ class TaskTar(TaskRelease):
         self.excludes = PackageExcludes()
         self.releaseFilename = 'glideinWMS_%s.tgz' % self.release.version
         self.excludePattern = self.excludes.commonPattern
+        self.tarExe = which('tar')
     #   __init__
 
     def execute(self):
@@ -146,10 +147,10 @@ class TaskTar(TaskRelease):
             exclude = "--exclude='" +  string.join(self.excludePattern, "' --exclude='") + "'"
         #cmd = 'cd %s/..; /bin/tar %s -czf %s/%s glideinwms' % \
         #      (self.release.sourceDir, exclude, self.release.releaseDir, self.releaseFilename)
-        src_dir = '%s/../src/%s' % (self.release.releaseDir, 
+        src_dir = '%s/../src/%s' % (self.release.releaseDir,
                                     self.release.version)
-        cmd = 'rm -rf %s; mkdir -p %s; cp -r %s %s/glideinWMS; cd %s; /bin/tar %s -czf %s/%s glideinWMS' % \
-              (src_dir, src_dir, self.release.sourceDir, src_dir, src_dir, exclude, self.release.releaseDir, self.releaseFilename)
+        cmd = 'rm -rf %s; mkdir -p %s; cp -r %s %s/glideinWMS; cd %s; %s %s -czf %s/%s glideinWMS' % \
+              (src_dir, src_dir, self.release.sourceDir, src_dir, src_dir, self.tarExe, exclude, self.release.releaseDir, self.releaseFilename)
         print "%s" % cmd
         execute_cmd(cmd)
         self.status = 'COMPLETE'
@@ -195,7 +196,7 @@ class TaskVersionFile(TaskRelease):
         self.checksumFilePattern = 'etc/checksum*'
         self.chksumBin = os.path.normpath(os.path.join(sys.path[0],
                                                        'chksum.sh'))
-        
+
 
 
     def execute(self):
@@ -220,7 +221,7 @@ class TaskVersionFile(TaskRelease):
 
 
 class PackageExcludes:
-    
+
     def __init__(self):
 
         self.commonPattern = [
@@ -260,21 +261,21 @@ class PackageExcludes:
             #'install/glideinWMS.ini',
             #'install/manage-glideins',
             #'install/services',
-            'factory/check*',        
-            'factory/glideFactory*Lib*',        
-            'factory/glideFactoryMon*',        
-            'factory/glideFactory.py',        
-            'factory/glideFactoryEntry.py',        
-            'factory/glideFactoryLog*.py',        
-            'factory/test*',        
-            'factory/manage*',        
-            'factory/stop*',        
-            'factory/tools',        
-            'creation/create_glidein',        
-            'creation/reconfig_glidein',        
-            'creation/info_glidein',        
-            'creation/lib/cgW*',        
-            'creation/web_base/factory*html',        
+            'factory/check*',
+            'factory/glideFactory*Lib*',
+            'factory/glideFactoryMon*',
+            'factory/glideFactory.py',
+            'factory/glideFactoryEntry.py',
+            'factory/glideFactoryLog*.py',
+            'factory/test*',
+            'factory/manage*',
+            'factory/stop*',
+            'factory/tools',
+            'creation/create_glidein',
+            'creation/reconfig_glidein',
+            'creation/info_glidein',
+            'creation/lib/cgW*',
+            'creation/web_base/factory*html',
             'creation/web_base/collector_setup.sh',
             'creation/web_base/condor_platform_select.sh',
             'creation/web_base/condor_startup.sh',
@@ -353,3 +354,27 @@ def execute_cmd1(cmd, stdin_data=None):
         raise ExeError, "Error running '%s'\ncode %i:%s"%(cmd,errcode,tempErr)
     return tempOut
 """
+
+def which(program):
+    """
+    Implementation of which command in python.
+
+    @return: Path to the binary
+    @rtype: string
+    """
+
+    def is_exe(fpath):
+        return os.path.exists(fpath) and os.access(fpath, os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+
+    return None
+

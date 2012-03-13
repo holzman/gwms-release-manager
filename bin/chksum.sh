@@ -1,5 +1,34 @@
 #!/bin/sh
 
+###############################################################################
+# Functions
+###############################################################################
+
+checksum() {
+    md5sum="md5sum"
+    file=$1
+    chksum_file=$2
+
+    platform="`uname`"
+    case $platform in
+        Linux)
+            md5sum $f >> $chksum_file
+            ;;
+        Darwin)
+            hash="`md5 $file | awk -F'=' '{print $NF}' | tr -d ' '`"
+            echo "$hash  $file" >> $chksum_file
+            ;;
+        *) 
+            echo "Build on $platform not supported"
+            exit 1
+            ;;
+    esac
+}
+
+###############################################################################
+# Main Starts Here
+###############################################################################
+
 if [ "x$1" = "x" ]; then
     echo "ERROR: Missing version as command line arg"
     exit 1
@@ -35,7 +64,7 @@ do
         res=`echo $f | grep $pats_str`
 
         if [ "$res" = "" ]; then
-            md5sum $f >> $chksum_file
+            checksum $f $chksum_file
         fi
     fi
 done
