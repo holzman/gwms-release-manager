@@ -9,6 +9,7 @@ export results=""
 export GHOME=`pwd`/glideinWMS
  
 export PYTHONPATH=${PYHOME}/lib/python2.4/site-packages:${PYTHONPATH}
+export PYTHONPATH=${PYHOME}/lib/python2.6/site-packages:${PYTHONPATH}
 export PYTHONPATH=${PYTHONPATH}:${GHOME}/lib
 export PYTHONPATH=${PYTHONPATH}:${GHOME}/creation/lib
 export PYTHONPATH=${PYTHONPATH}:${GHOME}/factory

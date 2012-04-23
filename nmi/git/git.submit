@@ -11,4 +11,4 @@ remote_task = git_installer.sh
 remote_post = /bin/tar
 remote_post_args = cfvz results.tar.gz git-1.7.6
 
-platforms = x86_64_rhap_5.3
+platforms = x86_64_rhap_5.2, x86_64_rhap_6.1-updated
