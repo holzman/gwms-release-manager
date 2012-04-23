@@ -1,4 +1,6 @@
 #!/bin/bash
+export NO_SETUPTOOLS=1
+
 /bin/tar xfvz pylint-0.21.2.tar.gz
 cd pylint-0.21.2
 python setup.py install --prefix `pwd`/../pylint
