@@ -178,7 +178,7 @@ if __name__ == '__main__':
     
     # compose and send email
     frm = 'pylint-results@noreply.com'
-    to = ['parag@fnal.gov']
+    to = ['glideinwms@fnal.gov']
     
     body = MIMEText(html, 'html')
     msg.attach(body)
