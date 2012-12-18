@@ -1,21 +1,20 @@
 #!/usr/bin/env python
-import os, sre, time
+import os, re, time
 from datetime import date, timedelta
 import subprocess
-from sets import Set
 
-logopts  = ['/usr/bin/git', 'log', '--all', '--oneline', '--since', '"2 weeks ago"']
+logopts  = ['/usr/bin/git', 'log', '--all', '--oneline', '--since="2 weeks ago"']
 logopts += ['--pretty=format:%d']
 
 p = subprocess.Popen(logopts, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 (stdout, stderr) = p.communicate()
 logOutput = stdout.split('\n')
 
-pattern = sre.compile('.*\((.*)\)')
+pattern = re.compile('.*\((.*)\)')
 
-branchlist = Set()
+branchlist = set()
 for line in logOutput:  # list that looks like " (branch1, branch2, branch3) "
-    m = sre.match(pattern, line)
+    m = re.match(pattern, line)
     if m:
         branches = m.group(1).split(',')
         for x in branches: branchlist.add(x.strip())
@@ -24,7 +23,7 @@ for line in logOutput:  # list that looks like " (branch1, branch2, branch3) "
 p = subprocess.Popen(['/usr/bin/git', 'branch'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 (stdout, stderr) = p.communicate()
-includebranches = Set(stdout.split())
+includebranches = set(stdout.split())
 #includebranches.add('refs/stash')
 
 branchlist.intersection_update(includebranches)

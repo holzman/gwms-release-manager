@@ -1,12 +1,12 @@
-#!/bin/bash
+#!/bin/bash 
 
 export currdir=$PWD
 
-#/usr/bin/git clone --mirror http://cdcvs.fnal.gov/projects/burt-test glideinWMS/.git
-/usr/bin/git clone --mirror http://cdcvs.fnal.gov/projects/glideinwms glideinWMS/.git
+/usr/bin/git --version
+/usr/bin/git clone --mirror http://cdcvs.fnal.gov/projects/glideinwms glideinwms/.git
 
 
-cd glideinWMS
+cd glideinwms
 /usr/bin/git config --bool core.bare false
 /usr/bin/git checkout master
 

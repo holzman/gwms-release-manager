@@ -3,7 +3,7 @@ component = all branches
 description = glideinWMS pylint tests
 run_type = build
 
-platforms = x86_64_rhap_5.2, x86_64_rhap_6.1-updated
+platforms = x86_64_rhap_5.8, x86_64_rhap_6.3
 
 inputs = pylint.nmi, git.nmi, config.scp, get-other-branches.scp, checkout.scp, pylint-gwms.scp, results.scp, remote_pre.scp
 
@@ -19,4 +19,4 @@ platform_post = results.py
 #notify = burt@fnal.gov
 
 cron_minute = 00
-cron_hour = 08
+cron_hour = 07
