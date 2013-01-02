@@ -3,7 +3,7 @@ export PYHOME=`pwd`/pylint
 export PATH=${PYHOME}/bin:${PATH}
 
 #hacking around branch_v2plus_2203 - repackaged branch
-grep -v '^[[:space:]]*#' config.txt | sort | grep -v branch_v2plus_2203 | uniq > config-tmp.txt
+grep -v '^[[:space:]]*#' config.txt | sort | grep -v _2203 | uniq > config-tmp.txt
 
 export currdir=$PWD
 export results=""
@@ -46,17 +46,20 @@ do
 done < config-tmp.txt
 
 # ok, do the repackaged branch (HACK)
-cd ${GHOME}
-line=branch_v2plus_2203
-${currdir}/git-1.7.6/git checkout branch_v2plus_2203
-export errors="$line-err.txt"
-export results="$results $errors"
-exitstatus=0
-cd $currdir
-# ignore configGUI -- I'm not ready to build wxPython on NMI yet !
-pylint --rcfile=/dev/null --errors-only glideinwms --ignore=configGUI.py>> $currdir/$errors
-echo "Modules checked=NA" >> $currdir/$errors
 
+revs="branch_v2plus_2203 master_2203"
+for line in $revs
+do
+    cd ${GHOME}
+    ${currdir}/git-1.7.6/git checkout $line
+    export errors="$line-err.txt"
+    export results="$results $errors"
+    exitstatus=0
+    cd $currdir
+# ignore configGUI -- I'm not ready to build wxPython on NMI yet !
+    pylint --rcfile=/dev/null --errors-only glideinwms --ignore=configGUI.py>> $currdir/$errors
+    echo "Modules checked=NA" >> $currdir/$errors
+done
 #unset GHOME
 #unset PYTHONPATH
 
