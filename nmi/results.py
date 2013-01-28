@@ -119,19 +119,19 @@ if __name__ == '__main__':
             num_files = 0
             num_errors = 0
             filenames = []
-    
+            filepath = ''
             for line in list:
                 if line.startswith('##'):
-                    filepath = line.split(' ')[1].split('\n')[0]
+                    filepath = line.split(' ')[1].split('\n')[0] + '/'
     
                 if line.startswith('*'):
                     num_files += 1
-                    filename = filepath+'/'+line.split(' ')[2].split('\n')[0]
+                    filename = filepath+line.split(' ')[2].split('\n')[0]
                     filenames.append(filename)
     
                     # add path to line
                     line_arr = line.split(' ')
-                    new_line = line_arr[0]+' '+line_arr[1]+' '+filepath+'/'+line_arr[2]
+                    new_line = line_arr[0]+' '+line_arr[1]+' '+filepath+line_arr[2]
                     f.write(new_line)
     
                 if line.startswith('E'):

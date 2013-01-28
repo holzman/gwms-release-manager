@@ -12,4 +12,5 @@ remote_post = git_post.sh
 #remote_post = /bin/tar
 #remote_post_args = cfvz results.tar.gz git-1.7.6
 
-platforms = x86_64_rhap_5.8, x86_64_rhap_6.3
+#platforms = x86_64_rhap_5.8, x86_64_rhap_6.3, x86_64_RedHat5, x86_64_RedHat6
+platforms =  x86_64_RedHat5, x86_64_RedHat6

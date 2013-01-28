@@ -3,9 +3,12 @@ component = all branches
 description = glideinWMS pylint tests
 run_type = build
 
-platforms = x86_64_rhap_5.8, x86_64_rhap_6.3
+#platforms = x86_64_rhap_5.8, x86_64_rhap_6.3
+platforms = x86_64_RedHat5, x86_64_RedHat6
 
-inputs = pylint.nmi, git.nmi, config.scp, get-other-branches.scp, checkout.scp, pylint-gwms.scp, results.scp, remote_pre.scp
+inputs = pylint.nmi, git.nmi, config.scp, get-other-branches.scp, \
+       checkout.scp, pylint-gwms.scp, results.scp, remote_pre.scp, \
+       prepackage-branches.scp
 
 pre_all = checkout.sh
 
