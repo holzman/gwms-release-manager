@@ -209,7 +209,7 @@ class TaskVersionFile(TaskRelease):
         self.status = 'COMPLETE'
 
     def checksumRelease(self, chksumFile, exclude):
-        excludePattern = self.checksumFilePattern + " CVS config_examples " 
+        excludePattern = self.checksumFilePattern + " install/templates CVS config_examples " 
         if len(exclude) > 0:
             excludePattern = "\"" + "%s "%excludePattern + string.join(exclude, " ") + "\""
         cmd = "cd %s; %s %s %s %s" % (self.release.sourceDir, self.chksumBin,
