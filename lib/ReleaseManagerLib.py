@@ -266,6 +266,7 @@ class PackageExcludes:
             'factory/glideFactoryMon*',
             'factory/glideFactory.py',
             'factory/glideFactoryEntry.py',
+            'factory/glideFactoryEntryGroup.py',
             'factory/glideFactoryLog*.py',
             'factory/test*',
             'factory/manage*',
