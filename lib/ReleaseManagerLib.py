@@ -149,7 +149,7 @@ class TaskTar(TaskRelease):
         #      (self.release.sourceDir, exclude, self.release.releaseDir, self.releaseFilename)
         src_dir = '%s/../src/%s' % (self.release.releaseDir,
                                     self.release.version)
-        cmd = 'rm -rf %s; mkdir -p %s; cp -r %s %s/glideinWMS; cd %s; %s %s -czf %s/%s glideinWMS' % \
+        cmd = 'rm -rf %s; mkdir -p %s; cp -r %s %s/glideinwms; cd %s; %s %s -czf %s/%s glideinwms' % \
               (src_dir, src_dir, self.release.sourceDir, src_dir, src_dir, self.tarExe, exclude, self.release.releaseDir, self.releaseFilename)
         print "%s" % cmd
         execute_cmd(cmd)
