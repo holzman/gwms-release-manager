@@ -1,2 +1,3 @@
 method = scp
-scp_file = /home/malatorre/gwms/checkout.sh
+scp_file = /home/burt/gwms-release-manager/branches/pylint-git/nmi/checkout.sh
+

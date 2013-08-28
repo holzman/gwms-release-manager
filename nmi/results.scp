@@ -1,2 +1,2 @@
 method = scp
-scp_file = /home/malatorre/gwms/results.py
+scp_file = /home/burt/gwms-release-manager/branches/pylint-git/nmi/results.py

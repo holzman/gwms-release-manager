@@ -1,0 +1,2 @@
+method = scp
+scp_file = /home/burt/gwms-release-manager/branches/pylint-git/nmi/libxslt/libxslt-1.1.17.tar.gz

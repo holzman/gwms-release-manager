@@ -4,11 +4,13 @@ component_version = 0.21.2
 description = pylint build
 
 run_type = build
-inputs = pylint.scp, logilab-astng.scp, logilab-common.scp, pylint_installer.scp
+inputs = pylint.scp, logilab-astng.scp, logilab-common.scp, pylint_installer.scp, pylint_post.scp
 
 remote_task = pylint_installer.sh
 
-remote_post = /bin/tar
-remote_post_args = cfvz results.tar.gz pylint
+remote_post = pylint_post.sh
+#remote_post = /bin/tar
+#remote_post_args = cfvz results.tar.gz pylint
 
-platforms = x86_64_rhap_5.3
+#platforms = x86_64_rhap_5.8, x86_64_rhap_6.3, x86_64_RedHat5, x86_64_RedHat6
+platforms = x86_64_RedHat5, x86_64_RedHat6

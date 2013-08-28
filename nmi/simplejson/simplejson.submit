@@ -1,0 +1,16 @@
+project = simplejson
+component = simplejson
+component_version = 2.0.9
+description = simplejson build
+
+run_type = build
+inputs = simplejson.scp, simplejson_installer.scp, simplejson_post.scp
+
+remote_task = simplejson_installer.sh
+
+remote_post = simplejson_post.sh
+#remote_post = /bin/tar
+#remote_post_args = cfvz results.tar.gz simplejson
+
+#platforms = x86_64_rhap_5.8, x86_64_rhap_6.3, x86_64_RedHat5, x86_64_RedHat6
+platforms = x86_64_RedHat5, x86_64_RedHat6

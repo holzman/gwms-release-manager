@@ -1,0 +1,3 @@
+method = scp
+scp_file = /home/burt/gwms-release-manager/branches/pylint-git/nmi/rrdtool/rrdtool-1.4.7.tar.gz
+

@@ -1,23 +1,26 @@
 project = glideinWMS
 component = all branches
 description = glideinWMS pylint tests
-
 run_type = build
-inputs = pylint.nmi, config.scp, get-other-branches.scp, filter-other-branches.scp, checkout.scp, pylint-gwms.scp, results.scp
 
-platform_post = results.py
+#platforms = x86_64_rhap_5.8, x86_64_rhap_6.3
+platforms = x86_64_RedHat5, x86_64_RedHat6
+
+inputs = pylint.nmi, git.nmi, config.scp, get-other-branches.scp, \
+       checkout.scp, pylint-gwms.scp, results.scp, remote_pre.scp, \
+       prepackage-branches.scp, rrdtool.nmi, simplejson.nmi, dummy-ldap.nmi, \
+       libxslt.nmi
 
 pre_all = checkout.sh
 
-remote_pre = /bin/ls
-remote_pre_args = -lrt
+remote_pre = remote_pre.sh
 
 remote_task = pylint-gwms.sh
 remote_task_timeout = 120
 
-platforms = x86_64_rhap_5.3
+platform_post = results.py
 
-#notify = malatorr@fnal.gov
+#notify = burt@fnal.gov
 
-#cron_minute = 00
-#cron_hour = 09
+cron_minute = 00
+cron_hour = 07

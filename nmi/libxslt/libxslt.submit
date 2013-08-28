@@ -1,0 +1,14 @@
+project = libxslt
+component = libxslt
+component_version = 1.1.17
+description = libxslt build
+
+run_type = build
+inputs = libxslt.scp, libxslt_installer.scp, libxslt_post.scp
+
+remote_task = libxslt_installer.sh
+
+remote_post = libxslt_post.sh
+
+#platforms = x86_64_rhap_5.8, x86_64_rhap_6.3, x86_64_RedHat5, x86_64_RedHat6
+platforms = x86_64_RedHat5, x86_64_RedHat6
