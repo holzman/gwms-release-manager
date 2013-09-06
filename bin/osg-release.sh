@@ -1,5 +1,8 @@
 #!/bin/sh
 
+if [ $# -ne 2 ]; then
+    echo "ERROR: Missing arguments 'tag' and 'user'"
+fi
 gwms_tag=$1
 username=$2
 osg_buildmachine="library.cs.wisc.edu"
@@ -25,5 +28,10 @@ archive_gwms() {
 archive_gwms
 
 ssh $username@$osg_buildmachine "mkdir -p $osg_uploaddir"
-scp $gwms_tar $username@$osg_buildmachine:$osg_uploaddir
-echo "Tarball Uploaded to $osg_buildmachine: $osg_uploaddir"
+
+if [ "$?" = "0" ]; then
+    scp $gwms_tar $username@$osg_buildmachine:$osg_uploaddir
+    echo "Tarball Uploaded to $osg_buildmachine: $osg_uploaddir"
+else
+    echo "ERROR: Failed to create directory $osg_uploaddir"
+fi
